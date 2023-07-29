@@ -10,6 +10,7 @@ static int zeller_gregorian(int m, int d, int y)
 
     if (m < 3) {
         m += 12;
+        y--;
     }
 
     K = y % 100;
@@ -26,6 +27,7 @@ static int zeller_julian(int m, int d, int y)
 
     if (m < 3) {
         m += 12;
+        y--;
     }
 
     K = y % 100;
