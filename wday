@@ -1,0 +1,41 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+exec("weekday") unless @ARGV;
+
+my ($d, $m, $y, %mnam);
+
+%mnam = ( "jan" => 1,
+          "feb" => 2,
+          "mar" => 3,
+          "apr" => 4,
+          "may" => 5,
+          "jun" => 6,
+          "jul" => 7,
+          "aug" => 8,
+          "sep" => 9,
+          "oct" => 10,
+          "nov" => 11,
+          "dec" => 12 );
+
+die "usage: wday [date]" unless (scalar @ARGV <= 3);
+
+if (1 == scalar @ARGV) {
+    $d = $ARGV[0];
+} elsif (2 == scalar @ARGV) {
+    $m = $ARGV[0];
+    $d = $ARGV[1];
+} elsif (3 == scalar @ARGV) {
+    $m = $ARGV[0];
+    $d = $ARGV[1];
+    $y = $ARGV[2];
+}
+
+$d =~ s/,//g if $d;
+$m =~ s/(.{3}).*/$1/ if $m;
+$m = $mnam{lc $m} if $m and exists $mnam{lc $m};
+
+exec("weekday -m $m -d $d -y $y") if $y;
+exec("weekday -m $m -d $d") if $m;
+exec("weekday -d $d");
