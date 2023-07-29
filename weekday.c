@@ -64,7 +64,7 @@ static void set_date(int *m, int *d, int *y)
     time_t now;
     struct tm *ltime;
 
-    if ((now = time(NULL)) == ((time_t) - 1)) {
+    if ((now = time(NULL)) == ((time_t) -1)) {
         perror("weekday: couldn't get time");
         exit(EXIT_FAILURE);
     }
