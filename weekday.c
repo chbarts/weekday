@@ -36,8 +36,16 @@ static int zeller_julian(int m, int d, int y)
     return (res + 6) % 7;
 }
 
-static int isleap(int y)
+static int isleap(int y, int j)
 {
+    if (j) {
+        if ((y % 4) == 0) {
+            return 1;
+        } else {
+            return  0;
+        }
+    }
+
     if ((y % 400) == 0) {
         return 1;
     } else if ((y % 100) == 0) {
@@ -172,6 +180,21 @@ int main(int argc, char *argv[])
         default:
             help(pnam);
             exit(EXIT_FAILURE);
+        }
+    }
+
+    if (2 == m) {
+        if (isleap(y, j)) {
+            if (d > 29) {
+                fprintf(stderr, "weekday: Impossible date\n");
+                exit(EXIT_FAILURE);
+            }
+
+        } else {
+            if (d > 28) {
+                fprintf(stderr, "weekday: Impossible date\n");
+                exit(EXIT_FAILURE);
+            }
         }
     }
 
