@@ -125,6 +125,8 @@ int main(int argc, char *argv[])
 
     char *days[] =
         { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+    int months[] =
+        { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
     pnam = argv[0];
 
@@ -183,6 +185,11 @@ int main(int argc, char *argv[])
         }
     }
 
+    if ((m <= 0) || (d <= 0)) {
+        fprintf(stderr, "weekday: meaningless date year: %d month: %d day: %d\n", y, m, d);
+        exit(EXIT_FAILURE);
+    }
+
     if (2 == m) {
         if (isleap(y, j)) {
             if (d > 29) {
@@ -195,6 +202,12 @@ int main(int argc, char *argv[])
                 fprintf(stderr, "weekday: Impossible date\n");
                 exit(EXIT_FAILURE);
             }
+        }
+
+    } else {
+        if (d > months[m - 1]) {
+            fprintf(stderr, "weekday: Impossible date\n");
+            exit(EXIT_FAILURE);
         }
     }
 
