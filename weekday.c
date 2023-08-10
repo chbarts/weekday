@@ -59,7 +59,7 @@ static int isleap(int y, int j)
     }
 }
 
-static void set_date(int *m, int *d, int *y)
+static void set_date(int *m, int *d, int *y, int *w)
 {
     time_t now;
     struct tm *ltime;
@@ -74,6 +74,7 @@ static void set_date(int *m, int *d, int *y)
     *d = ltime->tm_mday;
     *m = ltime->tm_mon + 1;
     *y = ltime->tm_year + 1900;
+    *w = ltime->tm_wday;
 }
 
 static void version(void)
@@ -114,7 +115,7 @@ static void help(char name[])
 int main(int argc, char *argv[])
 {
     char *pnam;
-    int m, d, y, c, r, j = 0, res, lind;
+    int m, d, y, w, c, r, j = 0, res, lind;
     struct option longopts[] = {
         { "month", 1, 0, 0 },
         { "day", 1, 0, 0 },
@@ -132,7 +133,12 @@ int main(int argc, char *argv[])
 
     pnam = argv[0];
 
-    set_date(&m, &d, &y);
+    set_date(&m, &d, &y, &w);
+
+    if (1 == argc) {
+        puts(days[w]);
+        return 0;
+    }
 
     while ((c =
             getopt_long(argc, argv, "m:d:y:jhv", longopts, &lind)) != -1) {
